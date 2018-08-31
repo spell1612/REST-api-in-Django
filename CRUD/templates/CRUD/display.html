@@ -1,0 +1,14 @@
+<h2>THE CRUD LIST</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+  </tr>
+  {% for list in displist %}
+  <tr>
+    <td><a href="{% url 'CRUD:details' list.id %}">{{list.objectname}}</a></td>
+    <td>{{list.price}}</td>
+  </tr>
+  {% endfor %}
+</table><br>
+<a href="{% url 'CRUD:enter' %}"><button>Enter Data</button></a>
