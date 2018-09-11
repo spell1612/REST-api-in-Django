@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from datetime import datetime
 
 from .models import RandObject
 from .forms import Prod
@@ -37,8 +38,18 @@ def enterDetails(request):
         fvar=Prod()
     return render(request,'CRUD/enter.html',{'form':fvar})
 
-
-
-
-
-# def saveDetails(request):
+def editDetails(request,id):
+    r=get_object_or_404(RandObject,pk=id)
+    if request.method=='POST':
+        f=Prod(request.POST,initial={'name':r.objectname,'price':r.price})
+        if f.is_valid():
+            r.objectname=f.cleaned_data["name"]
+            r.price=f.cleaned_data["price"]
+            r.date_added=datetime.now()
+            r.save()
+            return HttpResponseRedirect(reverse('CRUD:disp'),)
+        else:
+            return render(request,'CRUD/edit.html',{'form':f,'error':"All fields are mandatory"})
+    else:
+        f=Prod(initial={'name':r.objectname,'price':r.price})
+    return render(request,'CRUD/edit.html',{'form':f,'id':id})

@@ -3,11 +3,14 @@
   <tr>
     <th>Name</th>
     <th>Price</th>
+    <th>Actions</th>
   </tr>
   {% for list in displist %}
   <tr>
     <td><a href="{% url 'CRUD:details' list.id %}">{{list.objectname}}</a></td>
     <td>{{list.price}}</td>
+    <td><a href="{% url 'CRUD:edit' list.id  %}"><button>Update</button></a></td>
+  
   </tr>
   {% endfor %}
 </table><br>
