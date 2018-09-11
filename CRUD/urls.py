@@ -6,4 +6,5 @@ urlpatterns=[
     path('',views.DisplayList.as_view(),name='disp'),
     path('enter/',views.enterDetails,name='enter'),
     path('<int:pk>/details/',views.DetailView.as_view(),name='details'),
+    # path('enter/submit/',,name='subforms'),
 ]

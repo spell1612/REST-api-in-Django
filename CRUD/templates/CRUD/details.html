@@ -1,9 +1,10 @@
 <h1>Object Details</h1>
 <ul>
   <li>Item No. {{randobject.id}}
-  <li>Name: {{randobject.objectame}}</li>
+  <li>Name: {{randobject.objectname}}</li>
   <li>Cost: {{randobject.price}}</li>
   <li>Date Added: {{randobject.date_added}}</li>
   <!-- <li><button>Edit</button></li> -->
   <!-- <li><button>DELETE</button></li> -->
 </ul>
+<a href="{% url 'CRUD:disp' %}"><button>Back</button></a>

@@ -1,6 +1,9 @@
+{% if error %}
+  <strong>{{error}}</strong>
+{% endif %}
 <h1>Enter Data<h1>
-  <form action="{% url 'CRUD:enter'}">
-    <input type=text name=name value=name>
-    <input type=number name="price">
+  <form action="{% url 'CRUD:enter' %}" method='POST'>
+    {% csrf_token %}
+    {{form}}
     <input type=submit>
   </form>
