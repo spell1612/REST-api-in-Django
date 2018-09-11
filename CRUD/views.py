@@ -33,10 +33,10 @@ def enterDetails(request):
             return HttpResponseRedirect(reverse('CRUD:disp'),)
         else:
             #if any fields are unfilled
-            return render(request,'CRUD/enter.html',{'form':fvar,'error':"All fields are mandatory"})
+            return render(request,'CRUD/enter.html',{'form':fvar.as_p(),'error':"All fields are mandatory"})
     else:
         fvar=Prod()
-    return render(request,'CRUD/enter.html',{'form':fvar})
+    return render(request,'CRUD/enter.html',{'form':fvar.as_p()})
 
 def editDetails(request,id):
     r=get_object_or_404(RandObject,pk=id)
@@ -49,7 +49,7 @@ def editDetails(request,id):
             r.save()
             return HttpResponseRedirect(reverse('CRUD:disp'),)
         else:
-            return render(request,'CRUD/edit.html',{'form':f,'error':"All fields are mandatory"})
+            return render(request,'CRUD/edit.html',{'form':f.as_p(),'error':"All fields are mandatory"})
     else:
         f=Prod(initial={'name':r.objectname,'price':r.price})
-    return render(request,'CRUD/edit.html',{'form':f,'id':id})
+    return render(request,'CRUD/edit.html',{'form':f.as_p(),'id':id})
