@@ -9,8 +9,8 @@
   <tr>
     <td><a href="{% url 'CRUD:details' list.id %}">{{list.objectname}}</a></td>
     <td>{{list.price}}</td>
-    <td><a href="{% url 'CRUD:edit' list.id  %}"><button>Update</button></a></td>
-  
+    <td><a href="{% url 'CRUD:edit' list.id  %}"><button>Update</button></a>
+      <a href="{% url 'CRUD:delete' list.id  %}" onclick="return confirm('Are you sure you want to delete this?')" ><button>Delete</button></a></td>
   </tr>
   {% endfor %}
 </table><br>

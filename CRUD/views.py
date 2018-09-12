@@ -53,3 +53,8 @@ def editDetails(request,id):
     else:
         f=Prod(initial={'name':r.objectname,'price':r.price})
     return render(request,'CRUD/edit.html',{'form':f.as_p(),'id':id})
+
+def deleteDetails(request,id):
+    r=get_object_or_404(RandObject,pk=id)
+    r.delete()
+    return HttpResponseRedirect(reverse('CRUD:disp'),)
