@@ -1,10 +1,11 @@
-{% if error %}
+<!-- {% if error %}
   <strong>{{error}}</strong>
-{% endif %}
+{% endif %} -->
 <h1>Edit Data</h1>
-  <form action="{% url 'CRUD:edit' id %}" method='POST'>
+  <!-- <form action="{% url 'CRUD:edit' id %}" method='POST'> -->
+  <form method="post">
     {% csrf_token %}
-    {{form}}
+    {{form.as_p}}
     <input type=submit value='Save'>
   </form>
  <a href="{% url 'CRUD:disp' %}"><button>Cancel</button></a>

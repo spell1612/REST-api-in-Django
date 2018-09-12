@@ -40,26 +40,39 @@ class DetailView(generic.DetailView):
 
 class EnterDetails(generic.CreateView):     #generic CreateView is used to display a form based off of the model and accept inputs to the db
     form_class=Prod                             #dont need to assign model as the form class accepts a ModelForm which is already built upon a model
-    template_name='CRUD/enter.html'         
+    template_name='CRUD/enter.html'
     success_url=reverse_lazy('CRUD:disp') #reverse_lazy() instead of reverse() as the URLconf isnt loaded yet or something
 
-def editDetails(request,id):
-    r=get_object_or_404(RandObject,pk=id)
-    if request.method=='POST':
-        f=Prod(request.POST,initial={'name':r.objectname,'price':r.price})
-        if f.is_valid():
-            r.objectname=f.cleaned_data["name"]
-            r.price=f.cleaned_data["price"]
-            r.date_added=datetime.now()
-            r.save()
-            return HttpResponseRedirect(reverse('CRUD:disp'),)
-        else:
-            return render(request,'CRUD/edit.html',{'form':f.as_p(),'error':"All fields are mandatory"})
-    else:
-        f=Prod(initial={'name':r.objectname,'price':r.price})
-    return render(request,'CRUD/edit.html',{'form':f.as_p(),'id':id})
+# def editDetails(request,id):
+#     r=get_object_or_404(RandObject,pk=id)
+#     if request.method=='POST':
+#         f=Prod(request.POST,initial={'name':r.objectname,'price':r.price})
+#         if f.is_valid():
+#             r.objectname=f.cleaned_data["name"]
+#             r.price=f.cleaned_data["price"]
+#             r.date_added=datetime.now()
+#             r.save()
+#             return HttpResponseRedirect(reverse('CRUD:disp'),)
+#         else:
+#             return render(request,'CRUD/edit.html',{'form':f.as_p(),'error':"All fields are mandatory"})
+#     else:
+#         f=Prod(initial={'name':r.objectname,'price':r.price})
+#     return render(request,'CRUD/edit.html',{'form':f.as_p(),'id':id})
 
-def deleteDetails(request,id):
-    r=get_object_or_404(RandObject,pk=id)
-    r.delete()
-    return HttpResponseRedirect(reverse('CRUD:disp'),)
+class EditDetails(generic.UpdateView):
+    model=RandObject    #but for some reason the model needed to be included as well here else it wasnt working
+    form_class=Prod
+    template_name='CRUD/enter.html'
+    success_url=reverse_lazy('CRUD:disp')
+
+
+
+# def deleteDetails(request,id):
+#     r=get_object_or_404(RandObject,pk=id)
+#     r.delete()
+#     return HttpResponseRedirect(reverse('CRUD:disp'),)
+
+class DeleteDetails(generic.DeleteView):
+    model=RandObject
+    success_url=reverse_lazy('CRUD:disp')   #The DeleteView page displayed to a GET request uses a template_name_suffix of '_confirm_delete'.
+    # For example, changing this attribute to '_check_delete' for a view deleting objects for the example Author model would cause the default template_name to be 'myapp/author_check_delete.html'.
